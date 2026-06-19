@@ -4,6 +4,32 @@ globs: **/*.{jsx,tsx}
 alwaysApply: false
 ---
 
+# VoltPro — Project Context
+
+## What is VoltPro?
+B2B platform for Electrical Engineers targeting Fortune 500 companies.
+Covers electrical infrastructure setup, project management, and workforce coordination.
+
+## Core Feature Modules (build in order, part by part)
+1. **Engineer Directory** — Browse available engineers, filter by specialisation
+2. **Booking** — Book engineers for projects
+3. **Lead Management** — Import leads, assign to users
+4. **Quotes** — Convert qualified leads to quotes / estimates
+5. **Jobs** — Accept or decline (with reason), plan and schedule
+6. **Projects** — Track progress and profitability
+
+## Design System
+- Theme: **Midnight + Volt Green** — Background `#0A0F1E`, Accent `#22C55E`
+- Key CSS vars: `--black`, `--accent`, `--text-primary`, `--text-muted`, `--border-color`, `--accent-glow`
+- Font: Josefin Sans
+- All CSS via class names in `index.css` — no inline styles for static values
+- Mobile-first: always build responsive layouts; target desktop and mobile equally
+- Glow effects on accent elements using `filter: drop-shadow` or `box-shadow` with `--hover-shadow-color`
+
+## Build Approach
+- **Build part by part** — never scaffold entire modules at once
+- One component at a time, confirm before moving to the next
+
 # React Standards
 
 ## Components
