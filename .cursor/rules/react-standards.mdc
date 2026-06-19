@@ -1,0 +1,51 @@
+---
+description: React coding standards for VoltPro UI
+globs: **/*.{jsx,tsx}
+alwaysApply: false
+---
+
+# React Standards
+
+## Components
+- Use functional components only — no class components
+- One component per file; filename matches the component name
+- Keep components under 300 lines; split into smaller ones if larger
+
+## Naming
+- Components: `PascalCase` (e.g., `VoltStoreCard`)
+- Hooks: `camelCase` prefixed with `use` (e.g., `useVoltStores`)
+- Event handlers: prefix with `handle` (e.g., `handleSubmit`)
+
+## Hooks
+- Extract reusable logic into custom hooks in `src/hooks/`
+- Never call hooks inside conditions or loops
+
+## State & Data Fetching
+- Use `useState` / `useReducer` for local state
+- Use custom hooks to encapsulate API calls — keep components free of fetch logic
+
+## Styling
+- Colocate styles with their component
+- Avoid inline styles except for dynamic values
+
+## Error Handling
+
+```jsx
+// ❌ BAD — silent failure
+const data = await fetch('/api/stores').then(r => r.json());
+
+// ✅ GOOD — handle errors explicitly
+const res = await fetch('/api/stores');
+if (!res.ok) throw new Error(`Failed to fetch stores: ${res.status}`);
+const data = await res.json();
+```
+
+## Imports
+- Keep third-party imports before local imports
+- No unused imports
+
+## README Updates
+- When asked to "update README", add short bullet-point notes only
+- No lengthy explanations — just enough to jog memory when returning to the project
+- Use tables and code snippets over paragraphs
+- Group by topic; keep each section under 10 lines

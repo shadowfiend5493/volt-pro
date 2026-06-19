@@ -1,0 +1,51 @@
+---
+description: Spring Boot coding standards for VoltPro backend
+globs: **/*.java
+alwaysApply: false
+---
+
+# Spring Boot Standards
+
+## Package Structure
+```
+controller/   — REST controllers only, no business logic
+service/      — Business logic
+model/        — Domain/entity classes
+repository/   — Data access layer
+```
+
+## Controllers
+- Annotate with `@RestController` + `@RequestMapping`
+- Return `ResponseEntity<T>` for all endpoints
+- No business logic — delegate everything to the service layer
+
+```java
+// ❌ BAD — logic in controller
+@GetMapping("/{id}")
+public ResponseEntity<VoltStore> get(@PathVariable Long id) {
+    return repository.findById(id)
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
+}
+
+// ✅ GOOD — delegate to service
+@GetMapping("/{id}")
+public ResponseEntity<VoltStore> get(@PathVariable Long id) {
+    return ResponseEntity.ok(voltStoreService.getById(id));
+}
+```
+
+## Services
+- Annotate with `@Service`
+- One service per domain entity
+- All public methods should be the single entry point for business logic
+
+## Models
+- Use Lombok: `@Data`, `@Builder`, `@NoArgsConstructor`, `@AllArgsConstructor`
+- No business logic inside model classes
+
+## General
+- Use constructor injection via `@RequiredArgsConstructor` — never `@Autowired` on fields
+- Always add explicit imports — do not rely on wildcard imports
+- Use `@Slf4j` for logging; never use `System.out.println`
+- Validate input at the controller layer with `@Valid`
