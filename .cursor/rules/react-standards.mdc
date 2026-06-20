@@ -20,11 +20,23 @@ Covers electrical infrastructure setup, project management, and workforce coordi
 
 ## Design System
 - Theme: **Midnight + Volt Green** — Background `#0A0F1E`, Accent `#22C55E`
-- Key CSS vars: `--black`, `--accent`, `--text-primary`, `--text-muted`, `--border-color`, `--accent-glow`
-- Font: Josefin Sans
-- All CSS via class names in `index.css` — no inline styles for static values
-- Mobile-first: always build responsive layouts; target desktop and mobile equally
-- Glow effects on accent elements using `filter: drop-shadow` or `box-shadow` with `--hover-shadow-color`
+- Font: Outfit (loaded via Google Fonts in `index.css`)
+- **Styling: Tailwind CSS v4** — use utility classes in JSX; no separate CSS files for component styles
+- Custom design tokens are defined in `@theme` in `index.css` and map directly to Tailwind utilities:
+  | Token | Tailwind class |
+  |---|---|
+  | `#0A0F1E` | `bg-volt-black` / `text-volt-black` |
+  | `#0F1628` | `bg-volt-secondary` |
+  | `#22C55E` | `bg-volt-accent` / `text-volt-accent` |
+  | `#16A34A` | `bg-volt-accent-hover` |
+  | `#1E2D4A` | `border-volt-border` |
+  | `#F8FAFC` | `text-volt-text` |
+  | `#94A3B8` | `text-volt-muted` |
+- Only write CSS in `index.css` for values that **cannot** be expressed as Tailwind utilities (e.g. multi-layer `background` gradients with image positioning)
+- Use arbitrary values `[value]` for one-off sizes, shadows, or tracking not in the theme scale
+- Mobile-first: use Tailwind responsive prefixes (`sm:`, `md:`, `lg:`) — never separate media query blocks in components
+- Glow effects: `drop-shadow-[0_0_Xpx_rgba(...)]` or `shadow-[0_0_Xpx_rgba(...)]`
+- No inline styles for static values; use Tailwind classes
 
 ## Build Approach
 - **Build part by part** — never scaffold entire modules at once
@@ -51,8 +63,9 @@ Covers electrical infrastructure setup, project management, and workforce coordi
 - Use custom hooks to encapsulate API calls — keep components free of fetch logic
 
 ## Styling
-- Colocate styles with their component
-- Avoid inline styles except for dynamic values
+- **Always use Tailwind utility classes** — write classes directly in JSX
+- Only add to `index.css` when Tailwind utilities are insufficient (complex multi-layer backgrounds, keyframe animations)
+- Avoid inline styles except for truly dynamic runtime values (e.g. `style={{ width: progress + '%' }}`)
 
 ## Error Handling
 
