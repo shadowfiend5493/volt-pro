@@ -1,6 +1,9 @@
+import { Link } from 'react-router-dom';
+
 const Hero = () => {
     return (
         <section className="hero-bg relative h-[calc(100vh-64px)] min-h-[600px] flex flex-col justify-start overflow-hidden max-md:h-auto max-md:min-h-svh">
+            {/* hero-panel darkens the image behind the text so the headline stays readable. */}
             <div className="hero-panel absolute top-0 left-0 bottom-0 w-[58%] pointer-events-none z-1" aria-hidden="true" />
 
             <div className="relative z-2 pt-20 pb-8 px-[clamp(1.5rem,5vw,7rem)] shrink-0">
@@ -19,18 +22,19 @@ const Hero = () => {
                         leading companies. From planning to full-scale execution.
                     </p>
                     <div className="flex items-center gap-4 flex-wrap">
-                        <a
-                            href="/solutions"
+                        {/* Link changes routes without reloading the full page. */}
+                        <Link
+                            to="/solutions"
                             className="bg-volt-accent text-volt-black px-7 py-3.5 rounded text-[14px] font-bold tracking-[1px] uppercase no-underline transition-all duration-200 shadow-[0_0_20px_rgba(34,197,94,0.3)] hover:bg-volt-accent-hover hover:shadow-[0_0_32px_rgba(34,197,94,0.5)] hover:-translate-y-px"
                         >
                             Explore Solutions →
-                        </a>
-                        <a
-                            href="/engineers"
+                        </Link>
+                        <Link
+                            to="/engineers"
                             className="border border-volt-border text-volt-muted px-7 py-3.5 rounded text-[14px] font-semibold tracking-[1px] uppercase no-underline transition-all duration-200 hover:border-volt-accent hover:text-volt-accent"
                         >
                             View Engineers
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

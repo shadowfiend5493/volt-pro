@@ -49,6 +49,11 @@ Covers electrical infrastructure setup, project management, and workforce coordi
 - One component per file; filename matches the component name
 - Keep components under 300 lines; split into smaller ones if larger
 
+## Code Comments
+- When adding or changing UI logic, include short comments that explain the flow for newer React developers.
+- Comment state purpose, `useEffect` data loading, route decisions, API calls, and conditional rendering blocks.
+- Do not comment obvious JSX or Tailwind styling unless the styling supports non-obvious behavior.
+
 ## Naming
 - Components: `PascalCase` (e.g., `VoltStoreCard`)
 - Hooks: `camelCase` prefixed with `use` (e.g., `useVoltStores`)

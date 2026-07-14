@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBolt, faShield, faGlobe } from '@fortawesome/free-solid-svg-icons';
 
+// Static content is kept in an array so the JSX can render each stat consistently.
 const STATS = [
     { icon: faShield, title: 'Enterprise Grade', desc: 'Built to meet the highest global standards' },
     { icon: faBolt,   title: 'Mission Critical', desc: 'Engineered for uptime you can depend on'  },
@@ -11,6 +12,7 @@ const StatsBar = () => (
     <div className="bg-volt-secondary">
         <div className="px-[clamp(1.5rem,5vw,7rem)]">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 py-8">
+                {/* map loops through the STATS array and renders one block per item. */}
                 {STATS.map(({ icon, title, desc }) => (
                     <div key={title} className="flex items-start gap-3.5">
                         <FontAwesomeIcon

@@ -1,3 +1,4 @@
+// Logo names are data for now; later these can become image URLs or partner objects.
 const LOGOS = ['Siemens', 'ABB', 'Schneider Electric', 'Eaton', 'GE Vernova'];
 
 const TrustedBy = () => (
@@ -7,6 +8,7 @@ const TrustedBy = () => (
                 Trusted by Industry Leaders
             </p>
             <div className="flex items-center justify-center flex-wrap gap-x-14 gap-y-4">
+                {/* Each company name becomes one visual logo-style label. */}
                 {LOGOS.map(name => (
                     <span
                         key={name}
