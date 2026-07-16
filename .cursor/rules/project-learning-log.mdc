@@ -1,0 +1,12 @@
+---
+description: Keep the VoltPro root README updated as a learning journal
+alwaysApply: true
+---
+
+# Project Learning Log
+
+- Treat the root `README.md` as the project journal and learning log.
+- When adding a new UI feature, update the `Milestones`, `UI Concepts Learned`, or `Current Feature Summary` section.
+- Keep updates short and practical: one row or bullet per feature/concept.
+- Record concepts the user is learning, such as React hooks, controlled inputs, routing, API calls, Tailwind patterns, pagination, sorting, or reusable components.
+- Do not duplicate long explanations from code comments; summarize what was learned and where it appears in the project.

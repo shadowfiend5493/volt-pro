@@ -89,7 +89,8 @@ const data = await res.json();
 - No unused imports
 
 ## README Updates
-- When asked to "update README", add short bullet-point notes only
+- For new UI features or React concepts, update the root `README.md` project journal
+- Add short milestone rows or learning bullets only
 - No lengthy explanations — just enough to jog memory when returning to the project
 - Use tables and code snippets over paragraphs
 - Group by topic; keep each section under 10 lines

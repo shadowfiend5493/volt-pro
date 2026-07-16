@@ -17,15 +17,19 @@ public class Engineer {
     private String name;
     private String role;
     private String location;
+    private String photoUrl;
+    private double rating;
 
     public Engineer() {
     }
 
-    public Engineer(Long id, String name, String role, String location) {
+    public Engineer(Long id, String name, String role, String location, String photoUrl, double rating) {
         this.id = id;
         this.name = name;
         this.role = role;
         this.location = location;
+        this.photoUrl = photoUrl;
+        this.rating = rating;
     }
 
     public Long getId() {
@@ -58,5 +62,21 @@ public class Engineer {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }

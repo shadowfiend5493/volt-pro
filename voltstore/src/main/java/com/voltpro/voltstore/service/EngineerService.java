@@ -28,7 +28,9 @@ public class EngineerService {
                 engineer.getId(),
                 engineer.getName(),
                 engineer.getRole(),
-                engineer.getLocation()
+                engineer.getLocation(),
+                engineer.getPhotoUrl(),
+                engineer.getRating()
         );
     }
 }
