@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBolt, faBars, faXmark, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
+import { faBolt, faBars, faXmark, faShoppingBag, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
 // Navigation is data-driven so adding/removing menu items only changes this array.
 const NAV_LINKS = [
@@ -17,9 +17,24 @@ const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     // cartCount is ready for future cart state; it only renders a badge when greater than zero.
     const [cartCount] = useState(0);
+    // theme starts from the user's saved choice; light is the default for new visitors.
+    const [theme, setTheme] = useState(() => (
+        localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
+    ));
+
+    useEffect(() => {
+        // The root .dark class lets all Tailwind color tokens switch together.
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+        localStorage.setItem('theme', theme);
+    }, [theme]);
+
+    const handleThemeToggle = () => {
+        // Functional update keeps the toggle reliable even if React batches state changes.
+        setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+    };
 
     return (
-        <header className="bg-[rgba(10,15,30,0.85)] border-b border-[rgba(30,45,74,0.4)] backdrop-blur-md sticky top-0 z-100">
+        <header className="bg-volt-secondary/85 border-b border-volt-border/40 backdrop-blur-md sticky top-0 z-100">
             <div className="flex items-center justify-between mx-auto max-w-[1200px] px-6 py-4 relative">
 
                 <Link to="/" className="flex items-center gap-2.5 no-underline shrink-0">
@@ -59,6 +74,16 @@ const Header = () => {
                                 {cartCount}
                             </span>
                         )}
+                    </button>
+
+                    <button
+                        className="flex items-center justify-center rounded-full border border-volt-border bg-volt-black px-2.5 py-2 text-volt-muted transition-colors duration-200 hover:border-volt-accent hover:text-volt-accent"
+                        onClick={handleThemeToggle}
+                        aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+                        title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+                    >
+                        {/* Icon changes make the current theme control easy to understand visually. */}
+                        <FontAwesomeIcon icon={theme === 'light' ? faMoon : faSun} />
                     </button>
 
                     <button

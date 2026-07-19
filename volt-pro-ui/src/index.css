@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
-/* ─── Design tokens ───────────────────────────────────────── */
+/* Design tokens power Tailwind classes like bg-volt-black and text-volt-text. */
 @theme {
     --font-family-sans: "Outfit", sans-serif;
 
@@ -16,6 +16,29 @@
 }
 
 @layer base {
+    :root {
+        --color-volt-black:        #F8FAFC;
+        --color-volt-secondary:    #FFFFFF;
+        --color-volt-tertiary:     #E2E8F0;
+        --color-volt-accent:       #16A34A;
+        --color-volt-accent-hover: #15803D;
+        --color-volt-border:       #CBD5E1;
+        --color-volt-text:         #0F172A;
+        --color-volt-muted:        #475569;
+    }
+
+    /* Header toggles this class on <html> so the whole UI returns to the midnight palette. */
+    .dark {
+        --color-volt-black:        #0A0F1E;
+        --color-volt-secondary:    #0F1628;
+        --color-volt-tertiary:     #162035;
+        --color-volt-accent:       #22C55E;
+        --color-volt-accent-hover: #16A34A;
+        --color-volt-border:       #1E2D4A;
+        --color-volt-text:         #F8FAFC;
+        --color-volt-muted:        #94A3B8;
+    }
+
     body {
         background-color: var(--color-volt-black);
         color: var(--color-volt-text);
@@ -31,6 +54,27 @@
 .hero-bg {
     background:
         linear-gradient(to bottom,
+            rgba(248, 250, 252, 0.1) 0%,
+            transparent 20%,
+            transparent 60%,
+            rgba(255, 255, 255, 1) 100%
+        ),
+        url('/hero-lightning-city.png') 62% center / cover no-repeat;
+}
+
+.hero-panel {
+    background: linear-gradient(
+        to right,
+        rgba(248, 250, 252, 0.96) 0%,
+        rgba(248, 250, 252, 0.90) 55%,
+        rgba(248, 250, 252, 0.40) 80%,
+        transparent 100%
+    );
+}
+
+.dark .hero-bg {
+    background:
+        linear-gradient(to bottom,
             rgba(10, 15, 30, 0.1) 0%,
             transparent 20%,
             transparent 60%,
@@ -39,7 +83,7 @@
         url('/hero-lightning-city.png') 62% center / cover no-repeat;
 }
 
-.hero-panel {
+.dark .hero-panel {
     background: linear-gradient(
         to right,
         rgba(10, 15, 30, 0.96) 0%,
@@ -55,6 +99,9 @@
     }
     .hero-panel {
         width: 100%;
+        background: rgba(248, 250, 252, 0.86);
+    }
+    .dark .hero-panel {
         background: rgba(10, 15, 30, 0.82);
     }
 }

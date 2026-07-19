@@ -13,7 +13,8 @@ VoltPro is a B2B electrical engineering platform. This repository currently cont
 | Engineer cards | Engineer photo, role, location, and decimal rating display | Card layout, Font Awesome icons, accessible image alt text |
 | Decimal ratings | Backend supports `DECIMAL(2,1)` ratings; UI fills stars by decimal percentage | Dynamic inline style for runtime width, decimal formatting with `toFixed(1)` |
 | Pagination | Engineers are shown 6 per page with previous/next and page buttons | Client-side pagination, page clamping, resetting page on search/sort |
-| Sample data | 29 engineers seeded in H2 using `data.sql` | SQL seed data, schema updates, DTO/entity field mapping |
+| Sample data | 29 engineers seeded through MySQL-compatible `schema.sql` and `data.sql` | SQL seed data, schema updates, DTO/entity field mapping |
+| Light/dark theme toggle | Header lets users switch between light mode and the original dark palette | `useEffect`, `localStorage`, root class toggles, Tailwind token overrides |
 
 ## UI Concepts Learned
 
@@ -26,6 +27,7 @@ VoltPro is a B2B electrical engineering platform. This repository currently cont
 - Pagination should run after filtering and sorting so every page respects the active controls.
 - Decimal star ratings can be shown by overlaying a filled star on an empty star and changing the filled width.
 - Tailwind utilities should handle component styling; inline styles are only used for dynamic runtime values.
+- Theme preferences can be stored in `localStorage` and applied by toggling a class on the root HTML element.
 
 ## Current Feature Summary
 
@@ -34,6 +36,7 @@ VoltPro is a B2B electrical engineering platform. This repository currently cont
 - Users can sort engineers by name, rating, or location.
 - Users can move through engineer results with pagination.
 - Backend engineer data includes `photoUrl` and decimal `rating`.
+- Backend defaults to MySQL configuration, with H2 kept only for isolated tests.
 
 ## Useful Commands
 
@@ -42,6 +45,36 @@ VoltPro is a B2B electrical engineering platform. This repository currently cont
 | UI dev server | `cd volt-pro-ui && npm run dev` |
 | UI lint/build | `cd volt-pro-ui && npm run lint && npm run build` |
 | Backend tests | `cd voltstore && /opt/homebrew/bin/mvn clean test` |
+
+## Backend MySQL Docker
+
+Use this command to start the MySQL database for the Spring Boot backend:
+
+```bash
+docker run -p 3306:3306 \
+  --name voltstore-mysql \
+  -e MYSQL_ROOT_PASSWORD=root \
+  -e MYSQL_DATABASE=voltstore \
+  -v /Users/sarthaksatish/Desktop/voltstore-data:/var/lib/mysql \
+  -d mysql:8
+```
+
+If local port `3306` is already busy, use this fallback. It maps your Mac's `3307` port to MySQL's container port `3306`.
+
+```bash
+docker run -p 3307:3306 \
+  --name voltstore-mysql \
+  -e MYSQL_ROOT_PASSWORD=root \
+  -e MYSQL_DATABASE=voltstore \
+  -v /Users/sarthaksatish/Desktop/voltstore-data:/var/lib/mysql \
+  -d mysql:8
+```
+
+Run the backend against that Docker database with:
+
+```bash
+cd voltstore && DATABASE_PORT=3307 DATABASE_NAME=voltstore /opt/homebrew/bin/mvn spring-boot:run
+```
 
 ## Development Note
 

@@ -1,4 +1,4 @@
-MERGE INTO engineers (id, name, role, location, photo_url, rating) KEY(id) VALUES
+INSERT INTO engineers (id, name, role, location, photo_url, rating) VALUES
     (1, 'Aarav Patel', 'Electrical Engineer', 'London', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80', 4.9),
     (2, 'Maya Singh', 'Senior Power Systems Engineer', 'Manchester', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80', 4.8),
     (3, 'Rohan Mehta', 'Field Service Engineer', 'Birmingham', 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80', 4.2),
@@ -27,4 +27,10 @@ MERGE INTO engineers (id, name, role, location, photo_url, rating) KEY(id) VALUE
     (26, 'Ava Wright', 'Power Quality Engineer', 'Norwich', 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=400&q=80', 4.0),
     (27, 'Lucas Hill', 'Emergency Response Engineer', 'Portsmouth', 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80', 3.7),
     (28, 'Mia Turner', 'Microgrid Engineer', 'Milton Keynes', 'https://images.unsplash.com/photo-1512316609839-ce289d3eba0a?auto=format&fit=crop&w=400&q=80', 4.8),
-    (29, 'Samuel Cooper', 'Power Electronics Engineer', 'Wolverhampton', 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=400&q=80', 4.2);
+    (29, 'Samuel Cooper', 'Power Electronics Engineer', 'Wolverhampton', 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=400&q=80', 4.2)
+ON DUPLICATE KEY UPDATE
+    name = VALUES(name),
+    role = VALUES(role),
+    location = VALUES(location),
+    photo_url = VALUES(photo_url),
+    rating = VALUES(rating);
