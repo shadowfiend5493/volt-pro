@@ -2,11 +2,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faBookOpen,
-    faBuilding,
     faChartLine,
-    faCheckCircle,
-    faIndustry,
-    faLightbulb,
     faPlugCircleBolt,
     faShieldHalved,
 } from '@fortawesome/free-solid-svg-icons';
@@ -32,75 +28,6 @@ const PAGE_CONTENT = {
                 icon: faChartLine,
                 title: 'Monitoring and Maintenance',
                 text: 'Use scheduled visits and performance reviews to reduce downtime before it becomes expensive.',
-            },
-        ],
-    },
-    products: {
-        eyebrow: 'Products',
-        title: 'Tools and components for modern electrical teams.',
-        summary: 'Explore equipment categories that support installations, fault finding, energy efficiency, and field operations.',
-        heroPoints: ['Smart panels', 'Protection devices', 'Field service kits'],
-        sections: [
-            {
-                icon: faPlugCircleBolt,
-                title: 'Distribution Equipment',
-                text: 'Panels, breakers, cabling, and accessories selected for commercial and industrial reliability.',
-            },
-            {
-                icon: faLightbulb,
-                title: 'Energy Optimisation',
-                text: 'Meters, sensors, and controls that help teams understand consumption and improve efficiency.',
-            },
-            {
-                icon: faShieldHalved,
-                title: 'Safety Products',
-                text: 'Protective devices and inspection tools for safer installation, testing, and maintenance work.',
-            },
-        ],
-    },
-    industries: {
-        eyebrow: 'Industries',
-        title: 'Built for high-demand commercial and industrial sites.',
-        summary: 'VoltPro connects the right electrical expertise to sectors where reliability, safety, and fast response matter every day.',
-        heroPoints: ['Manufacturing', 'Commercial property', 'Renewables'],
-        sections: [
-            {
-                icon: faIndustry,
-                title: 'Manufacturing',
-                text: 'Keep production lines online with planned maintenance, rapid fault response, and controls expertise.',
-            },
-            {
-                icon: faBuilding,
-                title: 'Commercial Buildings',
-                text: 'Support offices, retail, and mixed-use properties with compliant electrical services and upgrade planning.',
-            },
-            {
-                icon: faChartLine,
-                title: 'Energy and Infrastructure',
-                text: 'Coordinate grid, storage, renewable, and resilience projects with engineers who understand critical systems.',
-            },
-        ],
-    },
-    resources: {
-        eyebrow: 'Resources',
-        title: 'Practical guidance for electrical project decisions.',
-        summary: 'Use VoltPro resources to compare service options, prepare project scopes, and learn the basics of reliable electrical operations.',
-        heroPoints: ['Buying guides', 'Safety notes', 'Project checklists'],
-        sections: [
-            {
-                icon: faBookOpen,
-                title: 'Project Guides',
-                text: 'Simple planning notes for upgrades, maintenance windows, engineer selection, and handover documents.',
-            },
-            {
-                icon: faCheckCircle,
-                title: 'Readiness Checklists',
-                text: 'Quick lists that help teams prepare sites, gather requirements, and reduce delays before work begins.',
-            },
-            {
-                icon: faLightbulb,
-                title: 'Learning Notes',
-                text: 'Plain-English explanations of React routing, API calls, controlled forms, and backend data flow as this project grows.',
             },
         ],
     },
@@ -131,6 +58,7 @@ const PAGE_CONTENT = {
 
 const MarketingPage = ({ pageKey }) => {
     const page = PAGE_CONTENT[pageKey] ?? PAGE_CONTENT.solutions;
+    const isAboutPage = pageKey === 'about';
 
     return (
         <section className="min-h-[calc(100vh-64px)] bg-volt-black px-[clamp(1.5rem,5vw,7rem)] py-16">
@@ -160,16 +88,18 @@ const MarketingPage = ({ pageKey }) => {
 
                     <div className="rounded-3xl border border-volt-border bg-volt-secondary p-7 shadow-[0_18px_70px_rgba(0,0,0,0.2)]">
                         <p className="mb-3 mt-0 text-sm font-semibold uppercase tracking-[2px] text-volt-accent">
-                            Need Support?
+                            {isAboutPage ? 'Engineer Network' : 'Need Support?'}
                         </p>
                         <p className="mb-6 text-volt-muted">
-                            Share your project requirements and VoltPro will help route the request to the right electrical support.
+                            {isAboutPage
+                                ? 'Meet the certified specialists available through the VoltPro network.'
+                                : 'Share your project requirements and VoltPro will help route the request to the right electrical support.'}
                         </p>
                         <Link
-                            to="/contact"
+                            to={isAboutPage ? '/engineers' : '/contact'}
                             className="inline-flex rounded-md bg-volt-accent px-5 py-3 text-sm font-bold uppercase tracking-[1.5px] text-volt-black no-underline transition hover:bg-volt-accent-hover"
                         >
-                            Contact Us
+                            {isAboutPage ? 'View Engineers' : 'Contact Us'}
                         </Link>
                     </div>
                 </div>

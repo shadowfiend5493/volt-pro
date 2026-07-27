@@ -19,3 +19,18 @@ CREATE TABLE IF NOT EXISTS contacts
     updated_at    TIMESTAMP   DEFAULT NULL,
     updated_by    VARCHAR(20) DEFAULT NULL
 );
+
+CREATE TABLE IF NOT EXISTS products
+(
+    product_id     BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name           VARCHAR(120)                          NOT NULL,
+    category       VARCHAR(80)                           NOT NULL,
+    description    VARCHAR(800)                          NOT NULL,
+    image_url      VARCHAR(500)                          NOT NULL,
+    price          DECIMAL(10,2)                         NOT NULL,
+    stock_quantity INT                                   NOT NULL,
+    created_at     TIMESTAMP   DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    created_by     VARCHAR(20)                           NOT NULL,
+    updated_at     TIMESTAMP   DEFAULT NULL,
+    updated_by     VARCHAR(20) DEFAULT NULL
+);

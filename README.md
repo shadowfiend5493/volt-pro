@@ -20,6 +20,8 @@ VoltPro is a B2B electrical engineering platform. This repository currently cont
 | Backend observability | Spring Boot Actuator exposes `/actuator/health` and `/actuator/info` | Health checks, info endpoints, safe endpoint exposure |
 | Error handling and validation | UI error page, React error boundary, backend global exception handler, contact field validation | Error boundaries, 404 routes, `@RestControllerAdvice`, Bean Validation field errors |
 | API documentation | Swagger UI and OpenAPI docs for backend endpoints | Springdoc OpenAPI, API metadata, controller annotations |
+| Reusable auditing | Contact audit columns now come from a shared `BaseEntity` with JPA auditing | `@MappedSuperclass`, `AuditorAware`, `@EnableJpaAuditing`, audit field reuse |
+| Product catalogue and cart | Products load from `/api/v1/products`, support search/sort/pagination, and detail pages add items to a persistent cart | Context provider, reducer state, `localStorage`, route params, audited product entity |
 
 ## UI Concepts Learned
 
@@ -38,6 +40,9 @@ VoltPro is a B2B electrical engineering platform. This repository currently cont
 - Conditional rendering can switch one form between login and signup modes without duplicating the whole page.
 - Error boundaries catch render-time UI failures and show a friendly fallback page.
 - Backend validation errors should return structured field messages so the UI can show users exactly what to fix.
+- Shared audit fields belong in a base entity so services do not manually set `created_by` and timestamp columns.
+- A React context provider is useful for shared UI state like cart items and header badge counts.
+- Reducers keep cart operations predictable when adding, removing, clearing, and changing quantities.
 
 ## Current Feature Summary
 
@@ -47,13 +52,18 @@ VoltPro is a B2B electrical engineering platform. This repository currently cont
 - Users can move through engineer results with pagination.
 - Backend engineer data includes `photoUrl` and decimal `rating`.
 - Backend defaults to MySQL configuration, with H2 kept only for isolated tests.
-- Top navigation routes render real React page components for Solutions, Products, Industries, Resources, About, and Contact.
+- Top navigation routes render real React page components for Solutions, Products, About, and Contact.
 - Contact submissions post to `/api/v1/contacts` and persist to the `contacts` table.
 - The header Login action opens `/login`, where users can choose login or signup mode.
 - Backend health and app info are available at `/actuator/health` and `/actuator/info`.
 - Unknown UI routes and runtime UI failures show a dedicated error page.
 - Backend exceptions return consistent JSON error responses with optional field-level validation details.
 - Swagger UI is available at `/swagger-ui.html`, and raw OpenAPI JSON is available at `/v3/api-docs`.
+- Contact rows use reusable JPA auditing fields for `created_at`, `created_by`, `updated_at`, and `updated_by`.
+- Product rows use reusable JPA auditing fields and are seeded into the `products` table.
+- Users can view products, open product detail pages, add items to the cart, edit quantities, remove items, and clear the cart.
+- Product cards support search by name/category/description, sorting, and pagination.
+- The engineer directory is linked from About, and seed data is limited to 6 engineers.
 
 ## Useful Commands
 

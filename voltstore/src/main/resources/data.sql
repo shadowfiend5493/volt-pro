@@ -4,33 +4,32 @@ INSERT INTO engineers (id, name, role, location, photo_url, rating) VALUES
     (3, 'Rohan Mehta', 'Field Service Engineer', 'Birmingham', 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80', 4.2),
     (4, 'Emily Clark', 'Control Systems Engineer', 'Leeds', 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80', 4.6),
     (5, 'Noah Williams', 'Renewable Energy Engineer', 'Bristol', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80', 4.7),
-    (6, 'Priya Nair', 'High Voltage Engineer', 'Glasgow', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80', 4.9),
-    (7, 'James Wilson', 'Maintenance Engineer', 'Liverpool', 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?auto=format&fit=crop&w=400&q=80', 3.6),
-    (8, 'Sofia Garcia', 'Automation Engineer', 'Cardiff', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80', 4.4),
-    (9, 'Daniel Brown', 'Grid Protection Engineer', 'Newcastle', 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80', 4.5),
-    (10, 'Amelia Hughes', 'Substation Engineer', 'Sheffield', 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80', 4.3),
-    (11, 'Kabir Sharma', 'Power Distribution Engineer', 'Nottingham', 'https://images.unsplash.com/photo-1504257432389-52343af06ae3?auto=format&fit=crop&w=400&q=80', 4.1),
-    (12, 'Olivia Taylor', 'Electrical Safety Engineer', 'Oxford', 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=400&q=80', 4.8),
-    (13, 'Ethan Martin', 'Battery Storage Engineer', 'Cambridge', 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=400&q=80', 4.6),
-    (14, 'Isabella Moore', 'Solar Systems Engineer', 'Brighton', 'https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?auto=format&fit=crop&w=400&q=80', 4.2),
-    (15, 'Leo Thompson', 'Network Reliability Engineer', 'York', 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80', 3.9),
-    (16, 'Grace Evans', 'Industrial Controls Engineer', 'Bath', 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=400&q=80', 4.7),
-    (17, 'Adam Khan', 'Transformer Engineer', 'Coventry', 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=400&q=80', 4.0),
-    (18, 'Chloe Walker', 'Grid Modernisation Engineer', 'Reading', 'https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=400&q=80', 4.9),
-    (19, 'Liam Scott', 'Critical Power Engineer', 'Southampton', 'https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=400&q=80', 4.4),
-    (20, 'Zara Ahmed', 'Protection Systems Engineer', 'Belfast', 'https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?auto=format&fit=crop&w=400&q=80', 4.5),
-    (21, 'Henry Green', 'Commissioning Engineer', 'Swansea', 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=400&q=80', 3.8),
-    (22, 'Nina Roberts', 'Energy Efficiency Engineer', 'Exeter', 'https://images.unsplash.com/photo-1526510747491-58f928ec870f?auto=format&fit=crop&w=400&q=80', 4.6),
-    (23, 'Oscar Lewis', 'Cable Systems Engineer', 'Aberdeen', 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80', 4.1),
-    (24, 'Freya King', 'Wind Energy Engineer', 'Hull', 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=400&q=80', 4.3),
-    (25, 'Muhammad Ali', 'SCADA Engineer', 'Derby', 'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=400&q=80', 4.7),
-    (26, 'Ava Wright', 'Power Quality Engineer', 'Norwich', 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=400&q=80', 4.0),
-    (27, 'Lucas Hill', 'Emergency Response Engineer', 'Portsmouth', 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80', 3.7),
-    (28, 'Mia Turner', 'Microgrid Engineer', 'Milton Keynes', 'https://images.unsplash.com/photo-1512316609839-ce289d3eba0a?auto=format&fit=crop&w=400&q=80', 4.8),
-    (29, 'Samuel Cooper', 'Power Electronics Engineer', 'Wolverhampton', 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=400&q=80', 4.2)
+    (6, 'Priya Nair', 'High Voltage Engineer', 'Glasgow', 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80', 4.9)
 ON DUPLICATE KEY UPDATE
     name = VALUES(name),
     role = VALUES(role),
     location = VALUES(location),
     photo_url = VALUES(photo_url),
     rating = VALUES(rating);
+
+DELETE FROM engineers WHERE id > 6;
+
+INSERT INTO products (product_id, name, category, description, image_url, price, stock_quantity, created_by) VALUES
+    (1, 'Smart Distribution Panel', 'Distribution', 'A compact smart panel for monitoring branch circuits, load balancing, and electrical safety in commercial buildings.', 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=600&q=80', 1299.00, 12, 'system'),
+    (2, 'Industrial Surge Protector', 'Protection', 'Panel-mounted surge protection designed for industrial sites that need reliable protection from transient voltage spikes.', 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=600&q=80', 249.99, 40, 'system'),
+    (3, 'Energy Monitoring Meter', 'Monitoring', 'A network-ready meter that helps facilities track energy consumption, identify peak loads, and plan efficiency improvements.', 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80', 349.50, 25, 'system'),
+    (4, 'Field Service Tool Kit', 'Maintenance', 'A practical electrical maintenance kit with insulated hand tools, testers, and quick-access field accessories.', 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=600&q=80', 179.00, 18, 'system'),
+    (5, 'EV Charger Load Controller', 'EV Infrastructure', 'A controller for managing EV charger demand, preventing overloads, and prioritising available site capacity.', 'https://images.unsplash.com/photo-1613665813446-82a78c468a1d?auto=format&fit=crop&w=600&q=80', 599.00, 9, 'system'),
+    (6, 'Portable Power Quality Analyzer', 'Testing', 'A portable analyser for diagnosing harmonics, voltage dips, power factor issues, and site reliability problems.', 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80', 899.00, 7, 'system'),
+    (7, 'Compact Circuit Breaker Set', 'Protection', 'A set of compact breakers for small commercial distribution boards and fast maintenance replacements.', 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=600&q=80', 89.99, 34, 'system'),
+    (8, 'Insulated Cable Reel', 'Installation', 'Heavy-duty insulated cable reel for temporary site power, workshops, and field installation teams.', 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=600&q=80', 139.00, 16, 'system'),
+    (9, 'Thermal Inspection Camera', 'Testing', 'Portable thermal camera for spotting overloaded circuits, hot joints, and early electrical faults.', 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80', 459.00, 11, 'system'),
+    (10, 'Commercial LED Driver Pack', 'Lighting', 'High-efficiency LED driver pack for commercial lighting upgrades and maintenance spares.', 'https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&w=600&q=80', 74.50, 50, 'system'),
+    (11, 'Battery Backup Controller', 'Backup Power', 'Controller for backup power switching, battery monitoring, and resilience planning in critical spaces.', 'https://images.unsplash.com/photo-1601049676869-702ea24cfd58?auto=format&fit=crop&w=600&q=80', 699.00, 8, 'system')
+ON DUPLICATE KEY UPDATE
+    name = VALUES(name),
+    category = VALUES(category),
+    description = VALUES(description),
+    image_url = VALUES(image_url),
+    price = VALUES(price),
+    stock_quantity = VALUES(stock_quantity);

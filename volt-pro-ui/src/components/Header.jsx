@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBolt, faBars, faXmark, faShoppingBag, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+import { useCart } from '../store/cart-store';
 
 // Navigation is data-driven so adding/removing menu items only changes this array.
 const NAV_LINKS = [
     { label: 'Solutions',  href: '/solutions'  },
     { label: 'Products',   href: '/products'   },
-    { label: 'Industries', href: '/industries' },
-    { label: 'Resources',  href: '/resources'  },
     { label: 'About',      href: '/about'      },
     { label: 'Contact',    href: '/contact'    },
 ];
@@ -16,8 +15,7 @@ const NAV_LINKS = [
 const Header = () => {
     // menuOpen controls the mobile navigation drawer.
     const [menuOpen, setMenuOpen] = useState(false);
-    // cartCount is ready for future cart state; it only renders a badge when greater than zero.
-    const [cartCount] = useState(0);
+    const { totalQuantity } = useCart();
     // theme starts from the user's saved choice; light is the default for new visitors.
     const [theme, setTheme] = useState(() => (
         localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
@@ -71,14 +69,18 @@ const Header = () => {
                         Login
                     </Link>
 
-                    <button className="bg-transparent border-0 text-volt-muted cursor-pointer text-xl relative px-1.5 py-1 transition-colors duration-200 hover:text-volt-accent flex items-center" aria-label="Shopping bag">
+                    <Link
+                        to="/cart"
+                        className="bg-transparent border-0 text-volt-muted cursor-pointer text-xl relative px-1.5 py-1 transition-colors duration-200 hover:text-volt-accent flex items-center"
+                        aria-label="Shopping bag"
+                    >
                         <FontAwesomeIcon icon={faShoppingBag} />
-                        {cartCount > 0 && (
+                        {totalQuantity > 0 && (
                             <span className="absolute -top-1 -right-1 bg-volt-accent text-volt-black rounded-full w-4.25 h-4.25 text-[10px] font-bold flex items-center justify-center leading-none">
-                                {cartCount}
+                                {totalQuantity}
                             </span>
                         )}
-                    </button>
+                    </Link>
 
                     <button
                         className="flex items-center justify-center rounded-full border border-volt-border bg-volt-black px-2.5 py-2 text-volt-muted transition-colors duration-200 hover:border-volt-accent hover:text-volt-accent"

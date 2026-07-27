@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ContactService {
 
-    private static final String WEBSITE_CREATED_BY = "website";
-
     private final ContactRepository contactRepository;
 
     public ContactService(ContactRepository contactRepository) {
@@ -23,8 +21,6 @@ public class ContactService {
         contact.setEmail(contactRequest.getEmail().trim());
         contact.setMobileNumber(contactRequest.getMobileNumber().trim());
         contact.setMessage(contactRequest.getMessage().trim());
-        // createdBy is server-owned so users cannot spoof audit fields from the form.
-        contact.setCreatedBy(WEBSITE_CREATED_BY);
 
         Contact savedContact = contactRepository.save(contact);
 
