@@ -15,6 +15,11 @@ VoltPro is a B2B electrical engineering platform. This repository currently cont
 | Pagination | Engineers are shown 6 per page with previous/next and page buttons | Client-side pagination, page clamping, resetting page on search/sort |
 | Sample data | 29 engineers seeded through MySQL-compatible `schema.sql` and `data.sql` | SQL seed data, schema updates, DTO/entity field mapping |
 | Light/dark theme toggle | Header lets users switch between light mode and the original dark palette | `useEffect`, `localStorage`, root class toggles, Tailwind token overrides |
+| Marketing routes and contact form | Completed Solutions, Products, Industries, Resources, About, and Contact pages | `NavLink`, route-to-component mapping, controlled forms, POST API calls |
+| Login and signup page | `/login` shows a login form with a signup option | Form mode toggles, conditional rendering, reusable controlled inputs |
+| Backend observability | Spring Boot Actuator exposes `/actuator/health` and `/actuator/info` | Health checks, info endpoints, safe endpoint exposure |
+| Error handling and validation | UI error page, React error boundary, backend global exception handler, contact field validation | Error boundaries, 404 routes, `@RestControllerAdvice`, Bean Validation field errors |
+| API documentation | Swagger UI and OpenAPI docs for backend endpoints | Springdoc OpenAPI, API metadata, controller annotations |
 
 ## UI Concepts Learned
 
@@ -28,6 +33,11 @@ VoltPro is a B2B electrical engineering platform. This repository currently cont
 - Decimal star ratings can be shown by overlaying a filled star on an empty star and changing the filled width.
 - Tailwind utilities should handle component styling; inline styles are only used for dynamic runtime values.
 - Theme preferences can be stored in `localStorage` and applied by toggling a class on the root HTML element.
+- `NavLink` works like `Link` but also exposes active route state for navigation styling.
+- Contact forms should use controlled inputs, submit with `preventDefault`, and let the backend own audit fields like `created_by`.
+- Conditional rendering can switch one form between login and signup modes without duplicating the whole page.
+- Error boundaries catch render-time UI failures and show a friendly fallback page.
+- Backend validation errors should return structured field messages so the UI can show users exactly what to fix.
 
 ## Current Feature Summary
 
@@ -37,6 +47,13 @@ VoltPro is a B2B electrical engineering platform. This repository currently cont
 - Users can move through engineer results with pagination.
 - Backend engineer data includes `photoUrl` and decimal `rating`.
 - Backend defaults to MySQL configuration, with H2 kept only for isolated tests.
+- Top navigation routes render real React page components for Solutions, Products, Industries, Resources, About, and Contact.
+- Contact submissions post to `/api/v1/contacts` and persist to the `contacts` table.
+- The header Login action opens `/login`, where users can choose login or signup mode.
+- Backend health and app info are available at `/actuator/health` and `/actuator/info`.
+- Unknown UI routes and runtime UI failures show a dedicated error page.
+- Backend exceptions return consistent JSON error responses with optional field-level validation details.
+- Swagger UI is available at `/swagger-ui.html`, and raw OpenAPI JSON is available at `/v3/api-docs`.
 
 ## Useful Commands
 

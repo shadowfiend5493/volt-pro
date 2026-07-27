@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBolt, faBars, faXmark, faShoppingBag, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
@@ -10,6 +10,7 @@ const NAV_LINKS = [
     { label: 'Industries', href: '/industries' },
     { label: 'Resources',  href: '/resources'  },
     { label: 'About',      href: '/about'      },
+    { label: 'Contact',    href: '/contact'    },
 ];
 
 const Header = () => {
@@ -35,7 +36,7 @@ const Header = () => {
 
     return (
         <header className="bg-volt-secondary/85 border-b border-volt-border/40 backdrop-blur-md sticky top-0 z-100">
-            <div className="flex items-center justify-between mx-auto max-w-[1200px] px-6 py-4 relative">
+            <div className="flex items-center justify-between mx-auto max-w-300 px-6 py-4 relative">
 
                 <Link to="/" className="flex items-center gap-2.5 no-underline shrink-0">
                     <FontAwesomeIcon icon={faBolt} className="text-volt-accent text-[26px] drop-shadow-[0_0_6px_#22C55E]" />
@@ -45,15 +46,18 @@ const Header = () => {
                 {/* Desktop nav is always visible on large screens; mobile nav follows menuOpen. */}
                 <nav className={`${menuOpen ? 'block' : 'hidden'} lg:flex absolute lg:static top-full left-0 w-full lg:w-auto bg-volt-secondary lg:bg-transparent border-t border-b lg:border-0 border-volt-border py-3 lg:py-0 z-99`}>
                     <ul className="list-none m-0 p-0 flex flex-col lg:flex-row lg:gap-2">
-                        {/* Map converts each nav item object into a router Link. */}
+                        {/* NavLink is a routing helper: it renders links and exposes active route state. */}
                         {NAV_LINKS.map(({ label, href }) => (
                             <li key={label}>
-                                <Link
+                                <NavLink
                                     to={href}
-                                    className="block px-6 lg:px-3.5 py-3 lg:py-2 text-[15px] font-medium tracking-tight text-volt-muted no-underline transition-colors duration-200 hover:text-volt-accent hover:bg-volt-accent/10 lg:rounded-sm"
+                                    className={({ isActive }) => `block px-6 lg:px-3.5 py-3 lg:py-2 text-[15px] font-medium tracking-tight no-underline transition-colors duration-200 hover:text-volt-accent hover:bg-volt-accent/10 lg:rounded-sm ${
+                                        isActive ? 'text-volt-accent bg-volt-accent/10' : 'text-volt-muted'
+                                    }`}
+                                    onClick={() => setMenuOpen(false)}
                                 >
                                     {label}
-                                </Link>
+                                </NavLink>
                             </li>
                         ))}
                     </ul>
@@ -62,7 +66,7 @@ const Header = () => {
                 <div className="flex items-center gap-4 shrink-0">
                     <Link
                         to="/login"
-                        className="border border-volt-accent text-volt-accent px-[18px] py-[7px] rounded-sm text-[13px] font-semibold tracking-[1.5px] uppercase no-underline transition-all duration-200 hover:bg-volt-accent hover:text-volt-black hover:shadow-[0_0_14px_rgba(34,197,94,0.15)]"
+                        className="border border-volt-accent text-volt-accent px-4.5 py-1.75 rounded-sm text-[13px] font-semibold tracking-[1.5px] uppercase no-underline transition-all duration-200 hover:bg-volt-accent hover:text-volt-black hover:shadow-[0_0_14px_rgba(34,197,94,0.15)]"
                     >
                         Login
                     </Link>
@@ -70,7 +74,7 @@ const Header = () => {
                     <button className="bg-transparent border-0 text-volt-muted cursor-pointer text-xl relative px-1.5 py-1 transition-colors duration-200 hover:text-volt-accent flex items-center" aria-label="Shopping bag">
                         <FontAwesomeIcon icon={faShoppingBag} />
                         {cartCount > 0 && (
-                            <span className="absolute -top-1 -right-1 bg-volt-accent text-volt-black rounded-full w-[17px] h-[17px] text-[10px] font-bold flex items-center justify-center leading-none">
+                            <span className="absolute -top-1 -right-1 bg-volt-accent text-volt-black rounded-full w-4.25 h-4.25 text-[10px] font-bold flex items-center justify-center leading-none">
                                 {cartCount}
                             </span>
                         )}
