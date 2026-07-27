@@ -160,10 +160,10 @@ const MarketingPage = ({ pageKey }) => {
 
                     <div className="rounded-3xl border border-volt-border bg-volt-secondary p-7 shadow-[0_18px_70px_rgba(0,0,0,0.2)]">
                         <p className="mb-3 mt-0 text-sm font-semibold uppercase tracking-[2px] text-volt-accent">
-                            Route Note
+                            Need Support?
                         </p>
                         <p className="mb-6 text-volt-muted">
-                            This page is rendered by a React Router route, so clicking navigation links swaps page components without a full browser refresh.
+                            Share your project requirements and VoltPro will help route the request to the right electrical support.
                         </p>
                         <Link
                             to="/contact"
