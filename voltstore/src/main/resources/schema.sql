@@ -34,3 +34,27 @@ CREATE TABLE IF NOT EXISTS products
     updated_at     TIMESTAMP   DEFAULT NULL,
     updated_by     VARCHAR(20) DEFAULT NULL
 );
+
+CREATE TABLE IF NOT EXISTS users
+(
+    user_id       BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name          VARCHAR(100)                          NOT NULL,
+    email         VARCHAR(100)                          NOT NULL UNIQUE,
+    mobile_number VARCHAR(15)                           NOT NULL,
+    password      VARCHAR(100)                          NOT NULL,
+    enabled       BOOLEAN     DEFAULT TRUE              NOT NULL,
+    created_at    TIMESTAMP   DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    created_by    VARCHAR(20)                           NOT NULL,
+    updated_at    TIMESTAMP   DEFAULT NULL,
+    updated_by    VARCHAR(20) DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS user_roles
+(
+    user_id BIGINT      NOT NULL,
+    role    VARCHAR(20) NOT NULL,
+    PRIMARY KEY (user_id, role),
+    CONSTRAINT fk_user_roles_user
+        FOREIGN KEY (user_id) REFERENCES users (user_id)
+        ON DELETE CASCADE
+);

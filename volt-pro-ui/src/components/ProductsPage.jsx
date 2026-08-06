@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import apiClient from '../api/apiClient';
 import Dropdown from './common/Dropdown';
 import SearchBox from './common/SearchBox';
+import { useAuth } from '../store/auth-store';
 import { useCart } from '../store/cart-store';
 
 const PRODUCTS_API_URL = '/v1/products';
@@ -97,6 +98,8 @@ const ProductsPage = () => {
     const [sortOption, setSortOption] = useState(SORT_OPTIONS[0].value);
     const [currentPage, setCurrentPage] = useState(1);
     const { addToCart } = useCart();
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -114,6 +117,11 @@ const ProductsPage = () => {
     }, []);
 
     const handleAddToCart = (product) => {
+        if (!isAuthenticated) {
+            navigate('/login', { state: { from: { pathname: '/products' } } });
+            return;
+        }
+
         addToCart(product, 1);
         setAddedProductId(product.productId);
     };

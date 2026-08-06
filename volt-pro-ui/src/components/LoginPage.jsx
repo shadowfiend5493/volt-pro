@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { useLocation, useNavigate } from 'react-router-dom';
+import apiClient from '../api/apiClient';
+import { useAuth } from '../store/auth-store';
 
 const INITIAL_FORM = {
     name: '',
     email: '',
+    mobileNumber: '',
     password: '',
 };
 
@@ -12,11 +14,17 @@ const LoginPage = () => {
     const [mode, setMode] = useState('login');
     const [formData, setFormData] = useState(INITIAL_FORM);
     const [message, setMessage] = useState('');
+    const [isSubmitting, setSubmitting] = useState(false);
+    const { loginSuccess } = useAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const isSignup = mode === 'signup';
+    const redirectPath = location.state?.from?.pathname ?? '/account';
 
     const handleModeChange = (nextMode) => {
         setMode(nextMode);
+        setFormData(INITIAL_FORM);
         setMessage('');
     };
 
@@ -29,13 +37,60 @@ const LoginPage = () => {
         }));
     };
 
-    const handleSubmit = (event) => {
+    const handleMobileInvalid = (event) => {
+        event.target.setCustomValidity('Mobile number should be 10 digits.');
+    };
+
+    const handleMobileChange = (event) => {
+        event.target.setCustomValidity('');
+        handleChange(event);
+    };
+
+    const fillDemoCredentials = (email) => {
+        setMode('login');
+        setMessage('');
+        setFormData({
+            name: '',
+            email,
+            mobileNumber: '',
+            password: 'Password@123',
+        });
+    };
+
+    const login = async (email, password) => {
+        const response = await apiClient.post('/v1/auth/login', { email, password });
+        loginSuccess(response.data.jwtToken, response.data.user);
+        navigate(redirectPath, { replace: true });
+    };
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        setMessage(
-            isSignup
-                ? 'Signup UI is ready. Backend account creation can be connected next.'
-                : 'Login UI is ready. Backend authentication can be connected next.',
-        );
+        setSubmitting(true);
+        setMessage('');
+
+        try {
+            if (isSignup) {
+                await apiClient.post('/v1/auth/register', formData);
+                await login(formData.email, formData.password);
+                return;
+            }
+
+            await login(formData.email, formData.password);
+        } catch (error) {
+            const fieldErrors = error.response?.data?.fieldErrors;
+            const validationMessages = fieldErrors
+                ? Object.values(fieldErrors).filter(Boolean)
+                : [];
+            const apiMessage = error.response?.data?.message;
+
+            setMessage(
+                validationMessages.length > 0
+                    ? validationMessages.join(' ')
+                    : (apiMessage || 'Authentication failed. Please try again.'),
+            );
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return (
@@ -52,31 +107,37 @@ const LoginPage = () => {
                         Use the login form for returning users, or switch to signup when a new customer wants to create an account.
                     </p>
 
-                    <div className="grid gap-4 sm:grid-cols-2">
-                        <div className="rounded-2xl border border-volt-border bg-volt-secondary p-5">
-                            <FontAwesomeIcon icon={faLock} className="mb-4 text-2xl text-volt-accent" />
-                            <h2 className="mb-2 mt-0 text-lg font-bold text-volt-text">
-                                Login
-                            </h2>
-                            <p className="m-0 leading-7 text-volt-muted">
-                                Returning users can access their project dashboard.
-                            </p>
-                        </div>
-                        <div className="rounded-2xl border border-volt-border bg-volt-secondary p-5">
-                            <FontAwesomeIcon icon={faUserPlus} className="mb-4 text-2xl text-volt-accent" />
-                            <h2 className="mb-2 mt-0 text-lg font-bold text-volt-text">
-                                Signup
-                            </h2>
-                            <p className="m-0 leading-7 text-volt-muted">
-                                New users can start an account request from the same page.
-                            </p>
+                    <div className="mb-8 rounded-2xl border border-volt-border bg-volt-secondary p-5">
+                        <h2 className="mb-3 mt-0 text-lg font-bold text-volt-text">
+                            Demo accounts
+                        </h2>
+                        <p className="mb-4 mt-0 leading-7 text-volt-muted">
+                            Use these to check user and admin route differences.
+                        </p>
+                        <div className="flex flex-wrap gap-3">
+                            <button
+                                type="button"
+                                className="rounded-md border border-volt-accent px-4 py-2 text-sm font-bold text-volt-accent transition hover:bg-volt-accent hover:text-volt-black"
+                                onClick={() => fillDemoCredentials('user@voltpro.com')}
+                            >
+                                Fill User Login
+                            </button>
+                            <button
+                                type="button"
+                                className="rounded-md border border-volt-accent px-4 py-2 text-sm font-bold text-volt-accent transition hover:bg-volt-accent hover:text-volt-black"
+                                onClick={() => fillDemoCredentials('admin@voltpro.com')}
+                            >
+                                Fill Admin Login
+                            </button>
                         </div>
                     </div>
+
                 </div>
 
                 <form
                     className="rounded-3xl border border-volt-border bg-volt-secondary p-6 shadow-[0_18px_70px_rgba(0,0,0,0.2)] md:p-8"
                     onSubmit={handleSubmit}
+                    autoComplete="off"
                 >
                     <div className="mb-6 grid grid-cols-2 rounded-xl border border-volt-border bg-volt-black p-1">
                         <button
@@ -115,6 +176,7 @@ const LoginPage = () => {
                                 name="name"
                                 value={formData.name}
                                 maxLength={100}
+                                autoComplete="off"
                                 onChange={handleChange}
                                 required
                             />
@@ -129,10 +191,30 @@ const LoginPage = () => {
                             name="email"
                             value={formData.email}
                             maxLength={100}
+                            autoComplete="off"
                             onChange={handleChange}
                             required
                         />
                     </label>
+
+                    {isSignup && (
+                        <label className="mb-5 flex flex-col gap-2 text-sm font-semibold text-volt-text">
+                            Mobile Number
+                            <input
+                                className="rounded-lg border border-volt-border bg-volt-black px-4 py-3 text-base font-normal text-volt-text outline-none transition focus:border-volt-accent"
+                                type="tel"
+                                name="mobileNumber"
+                                value={formData.mobileNumber}
+                                maxLength={10}
+                                pattern="[0-9]{10}"
+                                title="Mobile number should be 10 digits."
+                                autoComplete="off"
+                                onInvalid={handleMobileInvalid}
+                                onChange={handleMobileChange}
+                                required
+                            />
+                        </label>
+                    )}
 
                     <label className="flex flex-col gap-2 text-sm font-semibold text-volt-text">
                         Password
@@ -142,22 +224,24 @@ const LoginPage = () => {
                             name="password"
                             value={formData.password}
                             minLength={8}
+                            autoComplete="new-password"
                             onChange={handleChange}
                             required
                         />
                     </label>
 
                     {message && (
-                        <div className="mt-5 rounded-xl border border-volt-accent/40 bg-volt-accent/10 p-4 text-sm font-semibold text-volt-accent">
+                        <div className="mt-5 rounded-xl border border-red-500/40 bg-red-500/10 p-4 text-sm font-semibold text-red-300">
                             {message}
                         </div>
                     )}
 
                     <button
                         type="submit"
+                        disabled={isSubmitting}
                         className="mt-6 w-full rounded-md bg-volt-accent px-5 py-3 text-sm font-bold uppercase tracking-[1.5px] text-volt-black transition hover:bg-volt-accent-hover"
                     >
-                        {isSignup ? 'Create Account' : 'Login'}
+                        {isSubmitting ? 'Please wait...' : (isSignup ? 'Create Account' : 'Login')}
                     </button>
 
                     <button

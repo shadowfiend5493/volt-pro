@@ -59,12 +59,12 @@ const CartPage = () => {
                                 >
                                     Clear Cart
                                 </button>
-                                <button
-                                    type="button"
-                                    className="rounded-md bg-volt-accent px-5 py-3 text-sm font-bold uppercase tracking-[1.5px] text-volt-black transition hover:bg-volt-accent-hover"
+                                <Link
+                                    to="/checkout"
+                                    className="rounded-md bg-volt-accent px-5 py-3 text-sm font-bold uppercase tracking-[1.5px] text-volt-black no-underline transition hover:bg-volt-accent-hover"
                                 >
                                     Proceed to Checkout
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </>

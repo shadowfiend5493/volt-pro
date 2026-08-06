@@ -22,6 +22,7 @@ VoltPro is a B2B electrical engineering platform. This repository currently cont
 | API documentation | Swagger UI and OpenAPI docs for backend endpoints | Springdoc OpenAPI, API metadata, controller annotations |
 | Reusable auditing | Contact audit columns now come from a shared `BaseEntity` with JPA auditing | `@MappedSuperclass`, `AuditorAware`, `@EnableJpaAuditing`, audit field reuse |
 | Product catalogue and cart | Products load from `/api/v1/products`, support search/sort/pagination, and detail pages add items to a persistent cart | Context provider, reducer state, `localStorage`, route params, audited product entity |
+| JWT authentication and roles | Spring Security protects account/admin APIs; React login/register stores JWT auth state and gates admin UI | JWT Bearer tokens, password hashing, protected routes, role-based rendering |
 
 ## UI Concepts Learned
 
@@ -43,6 +44,7 @@ VoltPro is a B2B electrical engineering platform. This repository currently cont
 - Shared audit fields belong in a base entity so services do not manually set `created_by` and timestamp columns.
 - A React context provider is useful for shared UI state like cart items and header badge counts.
 - Reducers keep cart operations predictable when adding, removing, clearing, and changing quantities.
+- Auth state can use the same context/reducer pattern as cart state, with Axios interceptors adding JWT Bearer tokens to secured API calls.
 
 ## Current Feature Summary
 
@@ -64,6 +66,9 @@ VoltPro is a B2B electrical engineering platform. This repository currently cont
 - Users can view products, open product detail pages, add items to the cart, edit quantities, remove items, and clear the cart.
 - Product cards support search by name/category/description, sorting, and pagination.
 - The engineer directory is linked from About, and seed data is limited to 6 engineers.
+- Users can register, log in, open a protected account page, and see admin navigation only when their JWT role includes `ADMIN`.
+- Cart checkout now routes through a protected `/checkout` page so guests are asked to log in before continuing.
+- Cart state is stored per logged-in user email, so logout clears the visible cart and each account keeps its own items.
 
 ## Useful Commands
 

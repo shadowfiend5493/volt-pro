@@ -33,3 +33,16 @@ ON DUPLICATE KEY UPDATE
     image_url = VALUES(image_url),
     price = VALUES(price),
     stock_quantity = VALUES(stock_quantity);
+
+INSERT INTO users (user_id, name, email, mobile_number, password, enabled, created_by) VALUES
+    (1, 'VoltPro Admin', 'admin@voltpro.com', '9999999999', '$2a$12$UsG/1VJxi.1wc843mG19AO5ST7vAf0G1W3RC7/i700B4DMhc7hoOu', TRUE, 'system'),
+    (2, 'VoltPro User', 'user@voltpro.com', '8888888888', '$2a$12$UsG/1VJxi.1wc843mG19AO5ST7vAf0G1W3RC7/i700B4DMhc7hoOu', TRUE, 'system')
+ON DUPLICATE KEY UPDATE
+    name = VALUES(name),
+    mobile_number = VALUES(mobile_number),
+    enabled = VALUES(enabled);
+
+INSERT IGNORE INTO user_roles (user_id, role) VALUES
+    (1, 'USER'),
+    (1, 'ADMIN'),
+    (2, 'USER');

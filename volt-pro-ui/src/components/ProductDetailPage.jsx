@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import apiClient from '../api/apiClient';
+import { useAuth } from '../store/auth-store';
 import { useCart } from '../store/cart-store';
 
 const PRODUCT_IMAGE_FALLBACK = 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=600&q=80';
@@ -20,6 +21,8 @@ const ProductDetailPage = () => {
     const [error, setError] = useState('');
     const [added, setAdded] = useState(false);
     const { addToCart } = useCart();
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -37,6 +40,11 @@ const ProductDetailPage = () => {
     }, [productId]);
 
     const handleAddToCart = () => {
+        if (!isAuthenticated) {
+            navigate('/login', { state: { from: { pathname: `/products/${productId}` } } });
+            return;
+        }
+
         addToCart(product, quantity);
         setAdded(true);
     };

@@ -4,10 +4,22 @@ import { CartContext } from './cart-store';
 const ADD_TO_CART = 'ADD_TO_CART';
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 const CLEAR_CART = 'CLEAR_CART';
+const LEGACY_CART_KEY = 'cart';
+const CART_STORAGE_PREFIX = 'voltpro-cart:';
 
-const readStoredCart = () => {
+const getCartStorageKey = (userEmail) => (
+    userEmail ? `${CART_STORAGE_PREFIX}${userEmail}` : null
+);
+
+const readStoredCart = (userEmail) => {
+    const storageKey = getCartStorageKey(userEmail);
+
+    if (!storageKey) {
+        return [];
+    }
+
     try {
-        const storedCart = localStorage.getItem('cart');
+        const storedCart = localStorage.getItem(storageKey);
         return storedCart ? JSON.parse(storedCart) : [];
     } catch (error) {
         console.error('Failed to parse cart from localStorage:', error);
@@ -42,19 +54,36 @@ const cartReducer = (currentCart, action) => {
     }
 };
 
-export const CartProvider = ({ children }) => {
-    const [cart, dispatch] = useReducer(cartReducer, undefined, readStoredCart);
+export const CartProvider = ({ children, userEmail = null }) => {
+    const [cart, dispatch] = useReducer(
+        cartReducer,
+        undefined,
+        () => {
+            localStorage.removeItem(LEGACY_CART_KEY);
+            return readStoredCart(userEmail);
+        },
+    );
 
     useEffect(() => {
+        const storageKey = getCartStorageKey(userEmail);
+
+        if (!storageKey) {
+            return;
+        }
+
         try {
-            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem(storageKey, JSON.stringify(cart));
         } catch (error) {
             console.error('Failed to save cart to localStorage:', error);
         }
-    }, [cart]);
+    }, [cart, userEmail]);
 
     const cartValue = useMemo(() => {
         const addToCart = (product, quantity = 1) => {
+            if (!userEmail) {
+                return false;
+            }
+
             dispatch({
                 type: ADD_TO_CART,
                 payload: {
@@ -67,6 +96,8 @@ export const CartProvider = ({ children }) => {
                     quantity,
                 },
             });
+
+            return true;
         };
 
         const removeFromCart = (productId) => {
@@ -87,8 +118,9 @@ export const CartProvider = ({ children }) => {
             clearCart,
             totalQuantity,
             subtotal,
+            isCartReady: Boolean(userEmail),
         };
-    }, [cart]);
+    }, [cart, userEmail]);
 
     return (
         <CartContext.Provider value={cartValue}>

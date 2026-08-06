@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBolt, faBars, faXmark, faShoppingBag, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { useCart } from '../store/cart-store';
+import { useAuth } from '../store/auth-store';
 
 // Navigation is data-driven so adding/removing menu items only changes this array.
 const NAV_LINKS = [
@@ -16,6 +17,8 @@ const Header = () => {
     // menuOpen controls the mobile navigation drawer.
     const [menuOpen, setMenuOpen] = useState(false);
     const { totalQuantity } = useCart();
+    const { hasRole, isAuthenticated, logout, user } = useAuth();
+    const navigate = useNavigate();
     // theme starts from the user's saved choice; light is the default for new visitors.
     const [theme, setTheme] = useState(() => (
         localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
@@ -30,6 +33,12 @@ const Header = () => {
     const handleThemeToggle = () => {
         // Functional update keeps the toggle reliable even if React batches state changes.
         setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+    };
+
+    const handleLogout = () => {
+        logout();
+        setMenuOpen(false);
+        navigate('/');
     };
 
     return (
@@ -58,16 +67,68 @@ const Header = () => {
                                 </NavLink>
                             </li>
                         ))}
+                        {isAuthenticated && (
+                            <li>
+                                <NavLink
+                                    to="/account"
+                                    className={({ isActive }) => `block px-6 lg:px-3.5 py-3 lg:py-2 text-[15px] font-medium tracking-tight no-underline transition-colors duration-200 hover:text-volt-accent hover:bg-volt-accent/10 lg:rounded-sm ${
+                                        isActive ? 'text-volt-accent bg-volt-accent/10' : 'text-volt-muted'
+                                    }`}
+                                    onClick={() => setMenuOpen(false)}
+                                >
+                                    Account
+                                </NavLink>
+                            </li>
+                        )}
+                        {hasRole('ADMIN') && (
+                            <li>
+                                <NavLink
+                                    to="/admin"
+                                    className={({ isActive }) => `block px-6 lg:px-3.5 py-3 lg:py-2 text-[15px] font-medium tracking-tight no-underline transition-colors duration-200 hover:text-volt-accent hover:bg-volt-accent/10 lg:rounded-sm ${
+                                        isActive ? 'text-volt-accent bg-volt-accent/10' : 'text-volt-muted'
+                                    }`}
+                                    onClick={() => setMenuOpen(false)}
+                                >
+                                    Admin
+                                </NavLink>
+                            </li>
+                        )}
+                        {isAuthenticated && (
+                            <li className="lg:hidden">
+                                <button
+                                    type="button"
+                                    className="block w-full bg-transparent px-6 py-3 text-left text-[15px] font-medium tracking-tight text-volt-muted transition-colors duration-200 hover:bg-volt-accent/10 hover:text-volt-accent"
+                                    onClick={handleLogout}
+                                >
+                                    Logout
+                                </button>
+                            </li>
+                        )}
                     </ul>
                 </nav>
 
                 <div className="flex items-center gap-4 shrink-0">
-                    <Link
-                        to="/login"
-                        className="border border-volt-accent text-volt-accent px-4.5 py-1.75 rounded-sm text-[13px] font-semibold tracking-[1.5px] uppercase no-underline transition-all duration-200 hover:bg-volt-accent hover:text-volt-black hover:shadow-[0_0_14px_rgba(34,197,94,0.15)]"
-                    >
-                        Login
-                    </Link>
+                    {isAuthenticated ? (
+                        <div className="hidden items-center gap-3 md:flex">
+                            <span className="max-w-36 truncate text-sm font-semibold text-volt-muted">
+                                {user?.name}
+                            </span>
+                            <button
+                                type="button"
+                                className="border border-volt-accent bg-transparent text-volt-accent px-4.5 py-1.75 rounded-sm text-[13px] font-semibold tracking-[1.5px] uppercase transition-all duration-200 hover:bg-volt-accent hover:text-volt-black hover:shadow-[0_0_14px_rgba(34,197,94,0.15)]"
+                                onClick={handleLogout}
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    ) : (
+                        <Link
+                            to="/login"
+                            className="border border-volt-accent text-volt-accent px-4.5 py-1.75 rounded-sm text-[13px] font-semibold tracking-[1.5px] uppercase no-underline transition-all duration-200 hover:bg-volt-accent hover:text-volt-black hover:shadow-[0_0_14px_rgba(34,197,94,0.15)]"
+                        >
+                            Login
+                        </Link>
+                    )}
 
                     <Link
                         to="/cart"

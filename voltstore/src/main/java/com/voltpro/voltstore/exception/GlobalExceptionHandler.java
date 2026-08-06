@@ -6,6 +6,8 @@ import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -69,6 +71,36 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.badRequest().body(errorResponse);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiErrorResponse> handleAuthenticationException(
+            AuthenticationException exception,
+            HttpServletRequest request
+    ) {
+        ApiErrorResponse errorResponse = buildErrorResponse(
+                HttpStatus.UNAUTHORIZED,
+                "Invalid email or password.",
+                request.getRequestURI(),
+                Map.of()
+        );
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiErrorResponse> handleAccessDeniedException(
+            AccessDeniedException exception,
+            HttpServletRequest request
+    ) {
+        ApiErrorResponse errorResponse = buildErrorResponse(
+                HttpStatus.FORBIDDEN,
+                "You do not have permission to access this resource.",
+                request.getRequestURI(),
+                Map.of()
+        );
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
     }
 
     @ExceptionHandler(ResponseStatusException.class)

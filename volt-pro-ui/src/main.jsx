@@ -3,16 +3,19 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
-import { CartProvider } from './store/cart-context.jsx'
+import { AuthProvider } from './store/auth-context.jsx'
+import { UserCartProvider } from './store/UserCartProvider.jsx'
 
 // This is the React entry point: it mounts the app into the #root element in index.html.
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     {/* BrowserRouter enables <Routes> and <Link> navigation across the whole app. */}
     <BrowserRouter>
-      <CartProvider>
-        <App />
-      </CartProvider>
+      <AuthProvider>
+        <UserCartProvider>
+          <App />
+        </UserCartProvider>
+      </AuthProvider>
     </BrowserRouter>
   </StrictMode>,
 )
